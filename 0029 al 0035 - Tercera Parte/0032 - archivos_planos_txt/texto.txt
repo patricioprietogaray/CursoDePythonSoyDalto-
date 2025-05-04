@@ -1,0 +1,42 @@
+
+No sobreescribo todo el archivo sino que agrego lineas al final: 
+Usando Append
+
+linea uno
+linea dos
+linea tres
+
+No sobreescribo todo el archivo sino que agrego lineas al final: 
+Usando Append
+
+linea uno
+linea dos
+linea tres
+
+ Utilizando un bucle for: 
+
+ Utilizando un bucle for: 
+Linea 0: 
+Usando Append
+Linea 1: 
+linea uno
+Linea 2: linea dos
+Linea 3: linea tres
+
+ Utilizando un bucle for: 
+Linea 0: 
+Usando Append
+
+Linea 1: 
+linea uno
+
+Linea 2: linea dos
+
+Linea 3: linea tres
+
+
+ Utilizando un bucle for: 
+Linea 0: Usando Append
+Linea 1: linea uno
+Linea 2: linea dos
+Linea 3: linea tres

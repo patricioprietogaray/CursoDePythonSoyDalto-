@@ -1,0 +1,14 @@
+Los datos son:
+
+Nombre: Pepe
+Apellido: Argento
+------------------
+Nombre: Pepa
+Apellido: Pigg
+------------------
+Nombre: Pepita
+Apellido: Pistolera
+------------------
+Nombre: Don Pepito
+Apellido: Del Kiosco
+------------------
