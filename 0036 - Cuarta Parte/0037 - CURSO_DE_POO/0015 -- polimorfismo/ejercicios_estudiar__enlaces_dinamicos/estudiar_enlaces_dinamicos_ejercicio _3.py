@@ -100,3 +100,15 @@
 # facilita la metaprogramación y la reflexión. 
 # Es una de las características fundamentales que definen la naturaleza 
 # dinámica del lenguaje Python.
+
+
+
+# Ejercicio 3
+# Enunciado con Modificación en Tiempo de Ejecución (Objetos): 
+# Define una clase simple con algunos atributos. 
+# Crea una instancia de esta clase. 
+# Luego, en tiempo de ejecución, agrega un nuevo atributo a esta instancia específica. 
+# Demuestra cómo puedes acceder a este nuevo atributo en esa instancia, 
+# pero no en otras instancias de la misma clase creadas antes de la modificación.
+
+
