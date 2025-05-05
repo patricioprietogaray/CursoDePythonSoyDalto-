@@ -376,4 +376,123 @@ niebla_en_el_suelo.vision()
         
         
         
-        
+# vamos de nuevo
+# Creá un "molde" para hacer algo (una clase). 
+# Imaginate que este molde dice qué cosas puede hacer un objeto 
+# que se haga con él. Por ejemplo, un molde para un "Hablar" 
+# que tenga la capacidad de "decir algo".
+
+class Humano:
+    def hablar(self):
+        print('Estoy hablando')
+
+# Hacé un objeto usando ese molde (una instancia). 
+# Es como si usaras el molde "Hablar" para crear un 
+# objeto específico, digamos, un "Pájaro".
+
+pepe = Humano()
+
+# Decile a ese objeto que haga algo que sabe hacer (llama al método). 
+# Le decís al "Pájaro": "¡Decí algo!".
+pepe.hablar()
+
+# Ahora, la parte importante que tenés que explicar es: 
+# ¿cómo hace Python para saber qué significa "¡Decí algo!" 
+# para ese "Pájaro" en el momento en que se lo pedís?
+
+# Pensalo así:
+
+# Vos escribís el código. Python lo lee.
+
+# # # Python lee todo el codigo que he escrito
+# # # Cuando pepe quiere hablar pepe.hablar() python no tiene idea que es eso
+# # # En tiempo de ejecución (lenguaje de enlace dinamico o interpretado, 
+# # # mientras el programa se ejecuta en el ordenador):
+# # #   Encuentra el objeto pepe (instancia) e indaga si pepe sabe "hablar()"
+# # #   Busca en la clase y luego en el método hablar() y verifica si hay una 
+# # #   instuccion que exista
+# # #   Python ejecuta la instrucción que se encuentra
+# # #   dentro del método hablar()  
+# # #   python sabe que hacer ->  imprime por pantalla un mensaje: "Estoy hablando".
+###     En definitiva esto es el "enlace dinámico": 
+# # #   la conexión entre la orden ("hablar") y lo que realmente 
+# # #   se hace ("Estoy hablando") se establece dinámicamente,
+# # #   durante la ejecución del programa.
+
+
+# Cuando llega a la parte donde le decís al "Pájaro" que "diga algo", 
+# Python no tiene una lista prearmada de qué significa "decir algo" 
+# para cada cosa que existe en tu programa.
+# Lo que hace Python en ese momento (en "tiempo de ejecución", 
+# o sea, mientras el programa está corriendo):
+# Mira al objeto "Pájaro". Dice: "A ver, ¿tú sabes cómo 'decir algo'?" 
+# Busca en el "molde" del "Pájaro" (la clase). 
+# Va a la definición del "molde" "Hablar" para ver si ahí hay una instrucción 
+# de qué hacer cuando alguien le dice a un objeto de ese tipo que "diga algo".
+
+# Encuentra la instrucción. Si en el molde "Hablar" hay una parte 
+# que dice que "decir algo" significa mostrar un mensaje 
+# como "¡Pío pío!", entonces Python sabe qué hacer.
+
+# Ejecuta la instrucción. Python agarra esa instrucción ("¡Pío pío!") 
+# y la muestra en la pantalla.
+
+# La clave es que Python no hace esta búsqueda de 
+# "¿qué significa 'decir algo' para un Pájaro?" 
+# hasta el momento exacto en que se lo pedís en el programa. 
+# No lo decide antes de empezar a correr el programa. 
+# Esto es el "enlace dinámico": 
+# la conexión entre la orden ("decir algo") 
+# y lo que realmente se hace ("¡Pío pío!") se establece dinámicamente, 
+# durante la ejecución del programa.
+
+# Tu tarea en el ejercicio es explicar este proceso usando el código que escribas. 
+# Tenés que mostrar cómo creás el molde (la clase), el objeto (la instancia) 
+# y cómo le pedís que haga algo (llamas al método). 
+# Y luego, contá cómo Python hace para encontrar la acción correcta en ese momento.
+
+# ¿Se entiende un poco mejor ahora? ¡No dudes en preguntar si hay alguna parte que todavía no quede clara!
+
+
+
+
+
+
+# FINAL DEL EJERCICIO EJERCICIO RESUELTO
+
+class Humano:
+    def hablar(self):
+        print('Estoy hablando')
+
+pepe = Humano()
+pepe.hablar()
+
+
+
+# # # Python lee todo el codigo que he escrito lo tiene en memoria pero no lo interpreta.
+# # # Cuando pepe quiere hablar pepe.hablar() python no tiene idea que es eso
+# # # En tiempo de ejecución (lenguaje de enlace dinamico o interpretado,
+# # # mientras el programa se ejecuta en el ordenador):
+# # # Encuentra el objeto pepe (instancia) e indaga si pepe sabe "hablar()"
+# # # Busca en la clase y luego en el método hablar() y verifica si hay una
+# # # instuccion que exista
+# # # Python ejecuta la instrucción que se encuentra
+# # # dentro del método hablar()
+# # # python sabe que hacer -> imprime por pantalla un mensaje: "Estoy hablando".
+### En definitiva esto es el "enlace dinámico":
+# # # la conexión entre la orden ("hablar") y lo que realmente
+# # # se hace ("Estoy hablando") se establece dinámicamente,
+# # # durante la ejecución del programa.
+
+# ¡Exacto! ¡Entendiste perfectamente el concepto!
+
+# Tu explicación es clara y precisa. Capturaste la esencia de cómo Python maneja la llamada a un método en tiempo de ejecución.
+
+# Resaltaste correctamente los puntos clave:
+
+# Python lee el código pero la "acción" ocurre al ejecutar.
+# Cuando llamas a pepe.hablar(), Python no tiene una idea predefinida de qué significa hablar() para pepe hasta ese momento.
+# En tiempo de ejecución, busca en el objeto y su clase la definición del método.
+# Una vez que la encuentra, ejecuta las instrucciones dentro de ese método.
+# Y finalmente, definiste muy bien el "enlace dinámico" como esa conexión que se establece justo en el momento de la ejecución.
+# ¡Excelente! Con esta comprensión, estás listo para explicar el "cómo" del enlace dinámico en tu solución del Ejercicio 1. ¡Muy bien! ¿Pasamos al siguiente enunciado o quieres repasar algo más de este?
