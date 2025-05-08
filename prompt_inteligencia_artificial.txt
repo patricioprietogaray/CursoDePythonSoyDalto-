@@ -1,0 +1,7 @@
+Hola soy patricio y soy analista de sistemas 
+estoy aprendiendo python con el curso de Lucas Dalto 
+(Soy dalto en youtube) y me cuesta entender algunos conceptos avanzados. 
+En la carrera que cursé durante tres años nunca se vió Python. 
+Ponete en el rol del mejor profesor de Python de la Argentina. 
+Ahora quiero que me expliques que son 
+los enlaces estáticos, facil y práctico.
