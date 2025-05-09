@@ -1,0 +1,489 @@
+Concepto 1: Clases
+
+Las clases son como "planos" o "moldes" para crear objetos. Un objeto es una instancia de una clase.
+
+Ejercicio de Ejemplo: Clase Perro
+
+Python
+
+class Perro:
+    # Atributo de clase (compartido por todas las instancias)
+    reino = "Animal"
+
+    # Constructor: se llama al crear un objeto de la clase
+    def __init__(self, nombre, raza):
+        # Atributos de instancia (propios de cada objeto)
+        self.nombre = nombre
+        self.raza = raza
+        self.energia = 100 # Energía inicial
+
+    # Método de instancia
+    def ladrar(self):
+        if self.energia >= 10:
+            self.energia -= 10
+            return f"¡Guau! Soy {self.nombre} y me quedan {self.energia} de energía."
+        else:
+            return f"{self.nombre} está demasiado cansado para ladrar."
+
+    def alimentar(self, cantidad_comida):
+        self.energia += cantidad_comida * 5 # Cada unidad de comida da 5 de energía
+        if self.energia > 150:
+            self.energia = 150 # Límite máximo de energía
+        return f"{self.nombre} ha comido y ahora tiene {self.energia} de energía."
+
+# Crear objetos (instancias) de la clase Perro
+mi_perro1 = Perro("Fido", "Labrador")
+mi_perro2 = Perro("Luna", "Chihuahua")
+
+# Acceder a atributos y llamar a métodos
+print(f"{mi_perro1.nombre} es un {mi_perro1.raza} del reino {Perro.reino}.")
+print(mi_perro1.ladrar())
+print(mi_perro1.alimentar(10))
+print(mi_perro2.ladrar())
+print(mi_perro2.alimentar(5))
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar())
+print(mi_perro1.ladrar()) # Fido se cansará
+Ejercicios Propuestos: Clases
+
+Fácil: Clase Libro
+
+Crea una clase llamada Libro.
+El constructor debe recibir titulo, autor y numero_paginas.
+Crea un método llamado descripcion que devuelva un string formateado con el título y el autor del libro.
+Crea un método llamado es_largo que devuelva True si el libro tiene más de 300 páginas, y False en caso contrario.
+Crea dos instancias de Libro y prueba sus métodos.
+Medio: Clase Rectangulo
+
+Crea una clase llamada Rectangulo.
+El constructor debe recibir longitud y ancho.
+Crea un método llamado calcular_area que devuelva el área del rectángulo (longitud * ancho).
+Crea un método llamado calcular_perimetro que devuelva el perímetro del rectángulo (2 * (longitud + ancho)).
+Crea un método es_cuadrado que devuelva True si la longitud y el ancho son iguales, y False en caso contrario.
+Crea algunas instancias y prueba todos los métodos.
+Complejo: Clase CuentaBancaria
+
+Crea una clase llamada CuentaBancaria.
+El constructor debe recibir numero_cuenta (string), titular (string) y saldo_inicial (float, por defecto 0).
+Crea un método depositar(cantidad) que sume la cantidad al saldo. La cantidad debe ser positiva.
+Crea un método retirar(cantidad) que reste la cantidad del saldo. La cantidad debe ser positiva y no puede superar el saldo disponible.
+Crea un método consultar_saldo() que devuelva el saldo actual.
+Crea un método transferir(otra_cuenta, cantidad) que permita transferir dinero a otra instancia de CuentaBancaria. Debe verificar que la cantidad sea positiva y que haya saldo suficiente.
+Crea al menos dos cuentas y prueba todas las operaciones, incluyendo transferencias entre ellas.
+
+---------------------
+
+
+Concepto 2: Clases y Herencia
+
+La herencia permite que una clase (llamada subclase o clase derivada) herede atributos y métodos de otra clase (llamada superclase o clase base). Esto 1  promueve la reutilización de código.   
+1.
+github.com
+github.com
+
+Ejercicio de Ejemplo: Herencia con Vehiculo y Coche
+
+Python
+
+class Vehiculo:
+    def __init__(self, marca, modelo):
+        self.marca = marca
+        self.modelo = modelo
+        self.encendido = False
+
+    def encender(self):
+        if not self.encendido:
+            self.encendido = True
+            return f"El {self.marca} {self.modelo} está encendido."
+        return f"El {self.marca} {self.modelo} ya estaba encendido."
+
+    def apagar(self):
+        if self.encendido:
+            self.encendido = False
+            return f"El {self.marca} {self.modelo} está apagado."
+        return f"El {self.marca} {self.modelo} ya estaba apagado."
+
+class Coche(Vehiculo): # Coche hereda de Vehiculo
+    def __init__(self, marca, modelo, numero_puertas):
+        super().__init__(marca, modelo) # Llama al constructor de la clase base
+        self.numero_puertas = numero_puertas
+
+    def tocar_bocina(self):
+        return "¡Pip pip!"
+
+    # Sobrescribimos el método encender de la clase base
+    def encender(self):
+        estado_base = super().encender()
+        if self.encendido:
+            return f"{estado_base} ¡Listo para conducir con {self.numero_puertas} puertas!"
+        return estado_base
+
+
+class Moto(Vehiculo): # Moto hereda de Vehiculo
+    def __init__(self, marca, modelo, tipo_cadena):
+        super().__init__(marca, modelo)
+        self.tipo_cadena = tipo_cadena
+
+    def hacer_wheelie(self):
+        if self.encendido:
+            return f"¡La {self.marca} {self.modelo} está haciendo un wheelie con su cadena tipo {self.tipo_cadena}!"
+        return f"La {self.marca} {self.modelo} debe estar encendida para hacer un wheelie."
+
+
+# Crear objetos
+mi_vehiculo = Vehiculo("Genérico", "V1")
+mi_coche = Coche("Toyota", "Corolla", 4)
+mi_moto = Moto("Yamaha", "MT-07", "Reforzada")
+
+print(mi_vehiculo.encender())
+print(mi_coche.encender())
+print(mi_coche.tocar_bocina())
+print(f"Mi coche tiene {mi_coche.numero_puertas} puertas.")
+print(mi_moto.encender())
+print(mi_moto.hacer_wheelie())
+print(mi_moto.apagar())
+Ejercicios Propuestos: Clases y Herencia
+
+Fácil: Animal y Gato
+
+Crea una clase Animal con un constructor que reciba nombre y un método comer() que imprima "{nombre} está comiendo."
+Crea una clase Gato que herede de Animal.
+El constructor de Gato debe recibir nombre y raza. Debe llamar al constructor de Animal.
+Añade un método maullar() a Gato que imprima "¡Miau!".
+Crea una instancia de Gato, hazlo comer y maullar.
+Medio: Empleado y Gerente
+
+Crea una clase Empleado con atributos nombre, salario y un método mostrar_informacion() que imprima el nombre y salario.
+Crea una clase Gerente que herede de Empleado.
+Añade un atributo departamento al Gerente.
+Sobrescribe el método mostrar_informacion() en Gerente para que también muestre el departamento.
+Añade un método asignar_tarea(empleado, tarea) a Gerente que imprima "El gerente {nombre_gerente} asignó la tarea '{tarea}' a {nombre_empleado}."
+Crea un Empleado y un Gerente, muestra su información y prueba el método asignar_tarea.
+Complejo: FiguraGeometrica, Circulo y Rectangulo (Heredando de FiguraGeometrica)
+
+Crea una clase base FiguraGeometrica con un constructor que reciba color y un método describir_figura() que imprima "Esta figura es de color {color}."
+Esta clase también debe tener métodos abstractos (puedes usar pass por ahora o raise NotImplementedError) llamados calcular_area() y calcular_perimetro().
+Crea una clase Circulo que herede de FiguraGeometrica.
+Su constructor recibirá color y radio.
+Implementa calcular_area() ($ \pi \cdot radio^2 $) y calcular_perimetro() ($ 2 \cdot \pi \cdot radio $).
+Sobrescribe describir_figura() para añadir información sobre el radio.
+Crea una clase Rectangulo (diferente a la del ejercicio anterior de solo clases) que herede de FiguraGeometrica.
+Su constructor recibirá color, longitud y ancho.
+Implementa calcular_area() y calcular_perimetro().
+Sobrescribe describir_figura() para añadir información sobre la longitud y el ancho.
+Crea instancias de Circulo y Rectangulo, y prueba todos sus métodos.
+
+
+
+----------------------------
+
+
+Concepto 3: Clases y Polimorfismo
+
+El polimorfismo (muchas formas) permite que objetos de diferentes clases respondan al mismo mensaje (llamada a método) de manera diferente. Generalmente se logra a través de la herencia y la sobrescritura de métodos.
+
+Ejercicio de Ejemplo: Polimorfismo con InstrumentoMusical
+
+Python
+
+class InstrumentoMusical:
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+    def tocar_melodia(self, melodia):
+        raise NotImplementedError("Cada instrumento debe implementar este método")
+
+    def afinar(self):
+        return f"Afinando el instrumento: {self.nombre}"
+
+class Guitarra(InstrumentoMusical):
+    def tocar_melodia(self, melodia):
+        return f"Guitarra {self.nombre} tocando la melodía '{melodia}' con acordes."
+
+    def cambiar_cuerdas(self):
+        return f"Cambiando cuerdas de la guitarra {self.nombre}."
+
+class Piano(InstrumentoMusical):
+    def tocar_melodia(self, melodia):
+        return f"Piano {self.nombre} tocando la melodía '{melodia}' con teclas."
+
+    def limpiar_teclas(self):
+        return f"Limpiando las teclas del piano {self.nombre}."
+
+class Violin(InstrumentoMusical):
+    def tocar_melodia(self, melodia):
+        return f"Violín {self.nombre} tocando la melodía '{melodia}' con arco y cuerdas."
+
+    def aplicar_resina_arco(self):
+        return f"Aplicando resina al arco del violín {self.nombre}."
+
+
+# Lista de instrumentos
+instrumentos = [
+    Guitarra("Criolla"),
+    Piano("De cola"),
+    Violin("Stradivarius"),
+    Guitarra("Eléctrica")
+]
+
+# Polimorfismo en acción
+melodia_prueba = "Estrellita dónde estás"
+for instrumento in instrumentos:
+    print(instrumento.afinar())
+    print(instrumento.tocar_melodia(melodia_prueba)) # Mismo método, diferente comportamiento
+    if isinstance(instrumento, Guitarra): # Comprobación de tipo para métodos específicos
+        print(instrumento.cambiar_cuerdas())
+    elif isinstance(instrumento, Piano):
+        print(instrumento.limpiar_teclas())
+    print("-" * 20)
+Ejercicios Propuestos: Clases y Polimorfismo
+
+Fácil: Transporte
+
+Crea una clase base Transporte con un método moverse() que simplemente imprima "Moviéndose..."
+Crea dos clases derivadas: Coche y Bicicleta.
+Sobrescribe el método moverse() en cada clase derivada para que impriman "El coche se mueve por la carretera" y "La bicicleta se mueve por la ciclovía", respectivamente.
+Crea una lista con un objeto Coche y un objeto Bicicleta. Itera sobre la lista y llama al método moverse() de cada objeto.
+Medio: Personaje de Videojuego
+
+Crea una clase base Personaje con un atributo nombre y un método atacar(objetivo) que imprima "{nombre_personaje} realiza un ataque básico a {nombre_objetivo}."
+Crea clases derivadas: Guerrero y Mago.
+El Guerrero sobrescribe atacar(objetivo) para imprimir "{nombre_guerrero} golpea a {nombre_objetivo} con su espada."
+El Mago sobrescribe atacar(objetivo) para imprimir "{nombre_mago} lanza un hechizo a {nombre_objetivo}."
+Crea una función combate(personaje1, personaje2) que haga que cada personaje ataque al otro.
+Prueba la función combate con un Guerrero y un Mago.
+Complejo: Sistema de ProcesadorDeArchivos
+
+Crea una clase base ProcesadorDeArchivos con un método procesar(contenido) que debe ser implementado por las subclases (puede usar raise NotImplementedError).
+Crea clases derivadas: ProcesadorTexto, ProcesadorCSV y ProcesadorJSON.
+ProcesadorTexto: el método procesar(contenido_texto) contará el número de palabras en el contenido_texto y devolverá "Texto procesado: {numero_palabras} palabras."
+ProcesadorCSV: el método procesar(contenido_csv) (asume que contenido_csv es una lista de listas, donde la primera es el encabezado) contará el número de filas de datos (excluyendo el encabezado) y devolverá "CSV procesado: {numero_filas_datos} filas de datos."
+ProcesadorJSON: el método procesar(contenido_json) (asume que contenido_json es un diccionario) contará el número de claves de primer nivel y devolverá "JSON procesado: {numero_claves} claves principales."
+Crea una función procesar_varios_archivos(lista_procesadores, lista_contenidos) que itere sobre una lista de procesadores y sus respectivos contenidos, llamando al método procesar de cada uno.
+Crea instancias de cada procesador y datos de ejemplo para cada tipo de archivo, luego prueba procesar_varios_archivos.
+
+
+
+----------------------
+
+Concepto 4: Clases y Encapsulamiento
+
+El encapsulamiento consiste en restringir el acceso directo a algunos de los componentes de un objeto, a menudo ocultando los atributos y exponiendo métodos para interactuar con ellos (getters y setters). En Python, se usa una convención con guion bajo (_nombre_atributo) para indicar que un atributo es "protegido" y doble guion bajo (__nombre_atributo) para "name mangling" (hacerlo más difícil de acceder directamente desde fuera).
+
+Ejercicio de Ejemplo: Encapsulamiento con Termostato
+
+Python
+
+class Termostato:
+    def __init__(self, temperatura_actual=20.0, temp_min=10.0, temp_max=30.0):
+        self.__temperatura_actual = temperatura_actual # Atributo "privado"
+        self._temp_min = temp_min # Atributo "protegido"
+        self._temp_max = temp_max # Atributo "protegido"
+        self._validar_temperatura()
+
+    def _validar_temperatura(self):
+        # Método "protegido" para uso interno
+        if self.__temperatura_actual < self._temp_min:
+            self.__temperatura_actual = self._temp_min
+        elif self.__temperatura_actual > self._temp_max:
+            self.__temperatura_actual = self._temp_max
+
+    def get_temperatura(self):
+        return self.__temperatura_actual
+
+    def set_temperatura(self, nueva_temperatura):
+        if self._temp_min <= nueva_temperatura <= self._temp_max:
+            self.__temperatura_actual = nueva_temperatura
+            print(f"Temperatura ajustada a: {self.__temperatura_actual}°C")
+        else:
+            print(f"Error: La temperatura debe estar entre {self._temp_min}°C y {self._temp_max}°C.")
+            # Opcionalmente, ajustar a los límites si se sale
+            # self.__temperatura_actual = max(self._temp_min, min(nueva_temperatura, self._temp_max))
+
+    def subir_temperatura(self, grados=1.0):
+        nueva_temp = self.__temperatura_actual + grados
+        self.set_temperatura(nueva_temp)
+
+    def bajar_temperatura(self, grados=1.0):
+        nueva_temp = self.__temperatura_actual - grados
+        self.set_temperatura(nueva_temp)
+
+# Crear objeto
+mi_termostato = Termostato(temp_min=15, temp_max=25)
+print(f"Temperatura inicial: {mi_termostato.get_temperatura()}°C")
+
+mi_termostato.set_temperatura(22.5)
+mi_termostato.subir_temperatura(5) # Intentará subir a 27.5, pero el máx es 25
+print(f"Temperatura actual: {mi_termostato.get_temperatura()}°C") # Debería ser 25
+
+mi_termostato.bajar_temperatura(12) # Intentará bajar a 13, pero el min es 15
+print(f"Temperatura actual: {mi_termostato.get_temperatura()}°C") # Debería ser 15
+
+# Intentar acceder directamente (no recomendado para __privados)
+# print(mi_termostato.__temperatura_actual) # Esto dará un AttributeError
+# Se puede acceder con "name mangling" pero es una mala práctica:
+# print(mi_termostato._Termostato__temperatura_actual)
+Ejercicios Propuestos: Clases y Encapsulamiento
+
+Fácil: Estudiante
+
+Crea una clase Estudiante con un atributo "privado" __calificacion (inicializado en 0).
+Crea un método get_calificacion() para obtener el valor de __calificacion.
+Crea un método set_calificacion(nueva_calificacion) que solo permita establecer la calificación si está entre 0 y 10. Si no, debe imprimir un mensaje de error y no cambiar la calificación.
+Prueba creando un estudiante y usando los métodos para obtener y establecer su calificación (con valores válidos e inválidos).
+Medio: Producto
+
+Crea una clase Producto con atributos "privados": __codigo (string), __nombre (string) y __precio (float).
+El constructor debe recibir estos tres valores.
+Implementa un método get_precio() para obtener el precio.
+Implementa un método set_precio(nuevo_precio) que permita cambiar el precio solo si nuevo_precio es positivo. Si no, debe imprimir un error.
+Implementa un método "protegido" _aplicar_descuento(porcentaje) que calcule el precio con descuento, pero no modifique el __precio original del producto. Este método debe ser llamado por un método público obtener_precio_con_descuento(porcentaje). El porcentaje debe estar entre 0 y 100.
+Crea un producto, obtén su precio, intenta cambiarlo a un valor negativo y luego a uno positivo. Prueba el método de descuento.
+Complejo: ConfiguracionSistema
+
+Crea una clase ConfiguracionSistema que maneje configuraciones "sensibles".
+Tendrá un atributo "privado" __api_key y otro __modo_debug (booleano, por defecto False).
+El constructor debe permitir inicializar __api_key (solo se puede establecer una vez al crear el objeto, no debe haber un setter público para cambiarla después).
+Crea un método get_api_key_ofuscada() que devuelva solo los últimos 4 caracteres de la API key, precedidos por asteriscos (ej. "****-XYZ1"). Si la key tiene menos de 4 caracteres, que devuelva solo asteriscos.
+Crea métodos activar_modo_debug() y desactivar_modo_debug() para cambiar __modo_debug.
+Crea un método esta_en_modo_debug() para consultar el estado de __modo_debug.
+Añade un método "protegido" _registrar_cambio(mensaje) que imprima un mensaje de log (simulado con print) cada vez que se cambie el modo debug. Este método debe ser llamado internamente por activar_modo_debug y desactivar_modo_debug.
+Intenta que no sea posible modificar la __api_key directamente desde fuera una vez creada la instancia.
+
+
+-------------------------
+
+
+Concepto 5: Clases y Decoradores
+
+Los decoradores en Python son una forma de modificar o mejorar funciones o métodos de manera elegante y reutilizable. Para métodos de clase, @classmethod y @staticmethod son decoradores comunes, pero también podemos crear decoradores personalizados.
+
+Ejercicio de Ejemplo: Decoradores @property, @classmethod, @staticmethod y uno personalizado
+
+Python
+
+import time
+
+# Un decorador personalizado
+def medir_tiempo_ejecucion(func):
+    def wrapper(*args, **kwargs):
+        inicio = time.time()
+        resultado = func(*args, **kwargs)
+        fin = time.time()
+        print(f"El método '{func.__name__}' tardó {fin - inicio:.4f} segundos en ejecutarse.")
+        return resultado
+    return wrapper
+
+class Calculadora:
+    historial_operaciones = [] # Atributo de clase
+
+    def __init__(self, valor_inicial=0):
+        self._valor = valor_inicial # "Protegido"
+
+    @property # Permite tratar un método como un atributo (getter)
+    def valor(self):
+        print("Obteniendo valor...")
+        return self._valor
+
+    @valor.setter # Permite asignar a la "propiedad" valor (setter)
+    def valor(self, nuevo_valor):
+        print(f"Estableciendo valor a {nuevo_valor}...")
+        if isinstance(nuevo_valor, (int, float)):
+            self._valor = nuevo_valor
+            Calculadora.agregar_al_historial(f"Valor establecido a {self._valor}")
+        else:
+            print("Error: El valor debe ser numérico.")
+
+    @valor.deleter # Permite usar 'del' en la propiedad (deleter)
+    def valor(self):
+        print("Eliminando valor (reseteando a 0)...")
+        self._valor = 0
+        Calculadora.agregar_al_historial("Valor reseteado a 0")
+
+    @medir_tiempo_ejecucion
+    def sumar(self, cantidad):
+        self.valor += cantidad # Usa el setter de valor implícitamente
+        Calculadora.agregar_al_historial(f"Sumó {cantidad}, nuevo valor: {self._valor}")
+        time.sleep(0.01) # Simular trabajo
+        return self._valor
+
+    @medir_tiempo_ejecucion
+    def restar(self, cantidad):
+        self.valor -= cantidad # Usa el setter de valor implícitamente
+        Calculadora.agregar_al_historial(f"Restó {cantidad}, nuevo valor: {self._valor}")
+        time.sleep(0.02) # Simular trabajo
+        return self._valor
+
+    @classmethod # Método que opera sobre la clase, no la instancia
+    def agregar_al_historial(cls, operacion):
+        cls.historial_operaciones.append(operacion)
+
+    @classmethod
+    def ver_historial(cls):
+        print("\n--- Historial de Operaciones ---")
+        for i, op in enumerate(cls.historial_operaciones):
+            print(f"{i+1}. {op}")
+        print("--------------------------------")
+
+    @staticmethod # Método que no depende ni de la clase ni de la instancia
+    def es_numero_valido(numero):
+        return isinstance(numero, (int, float))
+
+# Uso
+calc = Calculadora(10)
+print(f"Valor inicial: {calc.valor}") # Llama al getter @property
+
+calc.valor = 20 # Llama al setter @valor.setter
+print(f"Valor después de set: {calc.valor}")
+
+calc.sumar(5)
+calc.restar(3)
+
+print(f"Valor final: {calc.valor}")
+
+del calc.valor # Llama al deleter @valor.deleter
+print(f"Valor después de del: {calc.valor}")
+
+Calculadora.ver_historial()
+
+print(f"¿Es 100 un número válido? {Calculadora.es_numero_valido(100)}")
+print(f"¿Es 'abc' un número válido? {Calculadora.es_numero_valido('abc')}")
+
+calc2 = Calculadora()
+calc2.sumar(7)
+Calculadora.ver_historial() # El historial es compartido
+Ejercicios Propuestos: Clases y Decoradores
+
+Fácil: @property para un círculo
+
+Crea una clase Circulo con un atributo "privado" __radio.
+Usa el decorador @property para crear un getter radio.
+Usa el decorador @radio.setter para crear un setter para radio que solo permita valores positivos.
+Usa el decorador @property para crear una propiedad calculada area que devuelva el área del círculo ($ \pi \cdot radio^2 $). Esta propiedad no debe tener un setter (será de solo lectura).
+Prueba creando un círculo, cambiando su radio (con valores válidos e inválidos) y consultando su área.
+Medio: @classmethod para gestionar instancias y decorador simple
+
+Crea una clase Usuario.
+La clase debe tener un atributo de clase _usuarios_registrados (lista) para llevar un registro de todos los nombres de usuario creados.
+El constructor __init__(self, nombre_usuario) debe añadir el nombre_usuario a _usuarios_registrados solo si no existe ya (para evitar duplicados). Si ya existe, que lance una excepción o imprima un mensaje.
+Crea un @classmethod llamado listar_usuarios() que imprima todos los _usuarios_registrados.
+Crea un @staticmethod llamado validar_password(password) que devuelva True si la contraseña tiene al menos 8 caracteres y False en caso contrario.
+Crea un decorador simple llamado @requiere_login que, antes de ejecutar un método de instancia, verifique un supuesto atributo self.logueado (que deberás añadir y manejar en la clase, por ejemplo, con métodos login() y logout()). Si no está logueado, el decorador debe imprimir "Acceso denegado. Por favor, inicie sesión." y no ejecutar el método. Aplica este decorador a un método de ejemplo como ver_perfil().
+Complejo: Decorador con argumentos y @classmethod para Fábrica (Factory)
+
+Crea un decorador llamado @limitar_llamadas(max_llamadas) que tome un argumento max_llamadas. Este decorador debe permitir que el método decorado se llame como máximo max_llamadas veces. Si se intenta llamar más veces, debe lanzar una excepción o imprimir un mensaje de advertencia. El contador de llamadas debe ser específico para cada instancia del objeto si el método es de instancia, o para la clase si el método es de clase.
+Crea una clase ServicioWeb.
+Dentro de ServicioWeb, crea un método de instancia realizar_peticion(url) que simule hacer una petición. Aplica el decorador @limitar_llamadas(3) a este método.
+Crea un @classmethod en ServicioWeb llamado crear_servicio_tipo(tipo_servicio). Este método actuará como una fábrica simple. Si tipo_servicio es "premium", devuelve una instancia de ServicioWebPremium (que hereda de ServicioWeb). Si es "basico", devuelve una instancia de ServicioWebBasico (que también hereda de ServicioWeb).
+ServicioWebPremium podría tener el método realizar_peticion decorado con @limitar_llamadas(10).
+ServicioWebBasico podría tener el método realizar_peticion decorado con @limitar_llamadas(2).
+Prueba creando diferentes tipos de servicios y llamando a realizar_peticion varias veces para ver cómo funciona el límite.
+¡Espero que estos ejercicios te sirvan para practicar! Recuerda que la clave es entender los conceptos y luego intentar aplicarlos. No dudes en preguntar si tienes alguna duda con alguno de ellos. ¡Mucha suerte!
+
