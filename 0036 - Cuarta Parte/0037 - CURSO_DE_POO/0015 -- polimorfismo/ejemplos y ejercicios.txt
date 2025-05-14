@@ -275,11 +275,17 @@ Crea instancias de cada procesador y datos de ejemplo para cada tipo de archivo,
 
 Concepto 4: Clases y Encapsulamiento
 
-El encapsulamiento consiste en restringir el acceso directo a algunos de los componentes de un objeto, a menudo ocultando los atributos y exponiendo métodos para interactuar con ellos (getters y setters). En Python, se usa una convención con guion bajo (_nombre_atributo) para indicar que un atributo es "protegido" y doble guion bajo (__nombre_atributo) para "name mangling" (hacerlo más difícil de acceder directamente desde fuera).
+El encapsulamiento consiste en restringir el acceso 
+directo a algunos de los componentes de un objeto, 
+a menudo ocultando los atributos y exponiendo métodos para 
+interactuar con ellos (getters y setters). 
+En Python, se usa una convención con guion bajo 
+(_nombre_atributo) para indicar que un atributo es "protegido" 
+y doble guion bajo (__nombre_atributo) para "name mangling" 
+(hacerlo más difícil de acceder directamente desde fuera).
 
 Ejercicio de Ejemplo: Encapsulamiento con Termostato
 
-Python
 
 class Termostato:
     def __init__(self, temperatura_actual=20.0, temp_min=10.0, temp_max=30.0):
