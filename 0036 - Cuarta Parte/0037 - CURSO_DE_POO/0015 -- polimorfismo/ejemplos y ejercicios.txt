@@ -369,9 +369,13 @@ Intenta que no sea posible modificar la __api_key directamente desde fuera una v
 
 Concepto 5: Clases y Decoradores
 
-Los decoradores en Python son una forma de modificar o mejorar funciones o métodos de manera elegante y reutilizable. Para métodos de clase, @classmethod y @staticmethod son decoradores comunes, pero también podemos crear decoradores personalizados.
+Los decoradores en Python son una forma de modificar 
+o mejorar funciones o métodos de manera elegante y reutilizable. 
+Para métodos de clase, @classmethod y @staticmethod son decoradores comunes, 
+pero también podemos crear decoradores personalizados.
 
-Ejercicio de Ejemplo: Decoradores @property, @classmethod, @staticmethod y uno personalizado
+Ejercicio de Ejemplo: 
+Decoradores @property, @classmethod, @staticmethod y uno personalizado
 
 Python
 
