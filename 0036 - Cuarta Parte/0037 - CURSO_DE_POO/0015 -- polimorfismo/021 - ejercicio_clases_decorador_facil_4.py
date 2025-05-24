@@ -39,7 +39,7 @@ class Circulo:
 mi_circulo = Circulo(0)
 print(f'Valor del radio de un ciculo: {mi_circulo._radio}')
 print('Asigno 2.5 como valor al radio ...')
-mi_circulo.func_radio = -2.5 
+mi_circulo.func_radio = 2.5 
 print(f'valor asignado al radio: {mi_circulo._radio}')
 print(f'Valor del area de un ciculo: {mi_circulo.calc_area}')
 
