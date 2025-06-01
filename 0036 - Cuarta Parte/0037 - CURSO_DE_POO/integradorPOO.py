@@ -28,7 +28,11 @@ class Personaje:
         BUENA SUERTE Y...
         QUE COMIENCE EL JUEGO
     ''')
-        
+
+class Arma:
+    def __init__(self, nombrArma, infrDaño = 0):
+        self.__nombre_arma = nombrArma
+        self.__infringe_daño = infrDaño
     
 
 
@@ -38,17 +42,17 @@ class Personaje:
 # terminal
 print('Primer personaje')
 nombre1 = input('Personaje 1 --> Ingrese el nombre del personaje: ')
-# arma1 = input(f'Ingrese el arma que utilizará {nombre1} como ataque: ')
-# daño1 = int(input(f'Ingrese el daño que el arma {arma1} le hará a su contrincante: '))
+arma1 = input(f'Ingrese el arma que utilizará {nombre1} como ataque: ')
+daño1 = int(input(f'Ingrese el daño que el arma {arma1} le hará a su contrincante: '))
 salud1 = 100
 vidas1 = int(input(f'Ingrese la cantidad de vidas que tendra el personaje {nombre1}: '))
 
 personaje1 = Personaje(nombre1, salud1, vidas1)
 personaje1.iniciar_el_juego()
-
+arma1 = Arma(arma1, daño1)
 
 print(f'Ver los atributos y metodos públicos con DIR: {dir(Personaje)}')
-
+print(f'Ver los atributos y metodos públicos con DIR: {dir(Arma)}')
 
 
 
