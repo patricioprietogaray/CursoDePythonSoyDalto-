@@ -1,3 +1,308 @@
+# Consigna del Ejercicio: "Arena de Combate de Héroes"
+# Objetivo:
+
+# El objetivo de este ejercicio es diseñar y programar un sistema modular 
+# para simular combates por turnos entre diferentes tipos de héroes en una arena. 
+# Deberás aplicar los principios de la Programación Orientada a Objetos (POO) 
+# para crear una estructura de clases clara, reutilizable y fácil de extender.
+
+# Contexto:
+
+# Imagina que estás creando un pequeño juego de rol. 
+# En este mundo, existen diferentes clases de personajes 
+# (Guerreros, Magos, Arqueros, etc.), 
+# cada uno con sus propias estadísticas y habilidades. 
+# Tu tarea es modelar este sistema.
+
+# Parte 1: La Clase Base - Personaje
+# Primero, debes crear una clase base llamada Personaje. 
+# Todo personaje en nuestro juego, 
+# sin importar su especialización, 
+# compartirá estas características y acciones.
+
+# Atributos:
+
+# nombre (str): El nombre del personaje.
+# salud (int): Los puntos de vida actuales del personaje.
+# salud_max (int): Los puntos de vida máximos 
+# que puede tener el personaje.
+# poder_ataque (int): La cantidad de daño base 
+# que inflige el personaje.
+# esta_vivo (bool): Un booleano que indica 
+# si el personaje sigue en combate.
+# Métodos:
+
+# __init__(self, nombre, salud, poder_ataque): 
+# El constructor de la clase. 
+# Debe inicializar todos los atributos. 
+# La salud_max debe ser igual a la salud inicial. 
+# esta_vivo debe ser True.
+
+# atacar(self, oponente): 
+# Este método debe reducir la salud del oponente 
+# en una cantidad igual al poder_ataque del 
+# personaje actual. 
+# Después de atacar, debe imprimir un mensaje que 
+# describa la acción (ej: "¡Aragorn ataca a Saruman 
+# y le causa 15 puntos de daño!").
+
+# recibir_daño(self, cantidad_daño): 
+# Reduce la salud del personaje. 
+# Si la salud llega a 0 o menos, 
+# el atributo esta_vivo debe cambiar a False. 
+# Imprime un mensaje informando el daño recibido 
+# y la salud restante.
+
+
+# mostrar_estado(self): Muestra el nombre y 
+# la salud actual del personaje 
+# (ej: "Gandalf - Salud: 80/100 HP").
+
+
+# Parte 2: Las Clases Especializadas - Herencia
+# Ahora, crearás al menos 
+# dos clases de personajes que hereden de la 
+# clase Personaje. 
+# Estas clases tendrán atributos y/o métodos únicos.
+
+# 1. Clase Guerrero (Hereda de Personaje)
+
+# Atributo adicional:
+# furia (int): Un recurso que el guerrero 
+# acumula para usar su habilidad especial. Comienza en 0.
+# Método sobreescrito (atacar):
+# El atacar del Guerrero debe ser diferente. 
+# Además de hacer daño, 
+# cada vez que ataca, 
+# su furia debe aumentar en 10.
+# Nuevo método (ataque_furioso):
+# Este método solo se puede usar si el Guerrero 
+# tiene al menos 40 de furia.
+# Realiza un ataque que inflige el doble del 
+# poder_ataque normal (poder_ataque * 2).
+# Después de usarlo, la furia del 
+# Guerrero se reinicia a 0.
+# Si no tiene suficiente furia, 
+# debe imprimir un mensaje indicándolo.
+
+
+# 2. Clase Mago (Hereda de Personaje)
+
+# Atributo adicional:
+# mana (int): El recurso que el mago 
+# usa para sus hechizos.
+# mana_max (int): La cantidad máxima de maná.
+# Método sobreescrito (atacar):
+# El atacar del Mago es un ataque básico 
+# que no consume maná, 
+# pero es más débil. 
+# Para simular esto, 
+# puedes hacer que su poder_ataque inicial sea bajo.
+# Nuevo método (lanzar_hechizo):
+# Este método consume 25 de mana.
+# Inflige un daño mágico igual a poder_ataque + 30.
+# Si el Mago no tiene suficiente mana, 
+# debe imprimir un mensaje y no realizar el ataque. 
+# En su lugar, podría regenerar 10 de maná ese turno.
+
+# Parte 3: La Simulación - Arena
+# Crea una clase Arena que se encargue 
+# de gestionar el combate entre dos personajes.
+
+# Atributos:
+
+# heroe1 (Objeto de tipo Personaje o subclase).
+# heroe2 (Objeto de tipo Personaje o subclase).
+# Métodos:
+
+# __init__(self, heroe1, heroe2): 
+# Constructor que recibe los dos combatientes.
+# combatir(self):
+# Este es el método principal. 
+# Debe simular un combate por turnos 
+# hasta que uno de los dos personajes 
+# ya no esté vivo (esta_vivo == False).
+
+# En cada turno, un personaje ataca al otro. 
+# Puedes decidir el orden de ataque 
+# (por ejemplo, heroe1 siempre ataca primero, 
+# o puede ser aleatorio).
+
+# Importante: En el turno de cada personaje, 
+# debes darle la opción de realizar una acción especial si es posible (ej: si es un Guerrero con suficiente furia, que use ataque_furioso). Puedes implementar una lógica simple: si la habilidad especial está disponible, la usa; si no, realiza un ataque normal.
+# Después de cada acción, se debe mostrar el estado de ambos combatientes usando su método mostrar_estado().
+# Al final del combate, el método debe declarar al ganador imprimiendo un mensaje claro (ej: "¡La batalla ha terminado! El ganador es Legolas.").
+# Puesta en Práctica (El main de tu programa):
+# Para probar tu código, en la sección principal de tu script (if __name__ == "__main__":):
+
+# Crea una instancia de un Guerrero (ej: conan = Guerrero("Conan", 120, 20)).
+# Crea una instancia de un Mago (ej: gandalf = Mago("Gandalf", 80, 10, mana=100)).
+# Crea una instancia de la Arena con los dos héroes que creaste.
+# Llama al método combatir() de la arena para iniciar la simulación.
+# ¡Mucha suerte! Este ejercicio te ayudará a afianzar cómo las clases interactúan entre sí y cómo la herencia te permite crear código más limpio y escalable. ¡A programar!
+
+import random
+
+# clase base
+class Personaje:
+    def __init__(self, nombre, salud, poder_ataque, esta_vivo = True):
+        self.nombre = nombre
+        self.salud = salud
+        self.salud_max = self.salud
+        self.poder_ataque = poder_ataque
+        self.esta_vivo = esta_vivo
+
+    def atacar(self, oponente):
+        # oponente.salud = oponente.salud - self.poder_ataque
+        print (f'¡{self.nombre} ataca a {oponente.nombre} y le causa {self.poder_ataque} puntos de daño!')
+
+
+    def recibir_daño(self, cantidad_daño):
+        self.salud = self.salud - cantidad_daño        
+        if self.salud <= 0:
+            self.esta_vivo = False
+            print(f'¡{self.nombre} ha muerto!')
+        else:
+            print(f'¡{self.nombre} le queda {self.salud} puntos de salud!')
+
+    def mostrar_estado(self):
+        print(f'¡{self.nombre} le queda {self.salud} puntos de salud.')
+
+class Guerrero(Personaje):
+    def __init__(self, nombre, salud, poder_ataque, furia = 0, esta_vivo=True):
+        super().__init__(nombre, salud, poder_ataque, esta_vivo)
+        self.furia = furia
+
+    def atacar(self, oponente):
+        self.furia += 10
+        return super().atacar(oponente)
+    
+    def ataque_furioso(self):
+        if self.furia >= 40:
+            self.furia = 0
+            return self.poder_ataque * 2
+        else:
+            return 'El guerrero se comió los mocos (no tiene tanta furia!).'
+
+class Mago(Personaje):
+    def __init__(self, nombre, salud, poder_ataque, mana, mana_max, esta_vivo=True):
+        super().__init__(nombre, salud, poder_ataque, esta_vivo)
+        self.mana = mana
+        self.mana_max = mana_max
+
+    def atacar(self, oponente):
+        self.poder_ataque = 4
+        print (f'¡{self.nombre} ataca a {oponente.nombre} y le causa {self.poder_ataque} puntos de daño!')
+    
+    def lanzar_hachizo(self, oponente):
+        if self.mana >= 25:
+            self.mana -= 25
+            self.poder_ataque = 30
+            super().atacar(self, oponente)
+        else:
+            print(f'No hay suficiente mana (más de 25): {self.mana}')
+            self.mana += 10
+
+class Arena:
+    def __init__(self, heroe1, heroe2):
+        self.heroe1 = heroe1
+        self.heroe2 = heroe2
+    
+    def combatir(self):
+        if self.heroe1.esta_vivo == False:
+            print(f'El {self.heroe1.nombre} ha muerto!')
+            return 'muerto'
+        elif self.heroe2.esta_vivo == False:
+            print(f'El {self.heroe2} ha muerto!')
+            return 'muerto'
+        ataque_aleatorio = random.randint(0,1)
+        if ataque_aleatorio == 0:
+            personaje = self.heroe1.nombre
+            self.heroe2.salud -= self.heroe1.poder_ataque
+            if self.heroe2.salud < 1:
+                self.heroe2.esta_vivo = False
+                return personaje,'muerto'
+            else:
+                print(f'{self.heroe1.nombre} ataca a {self.heroe2.nombre} y lo deja con {self.heroe2.salud} de salud.')
+                return 'heroe2'
+        else:
+            personaje = self.heroe2.nombre
+            self.heroe1.salud -= self.heroe2.poder_ataque
+            if self.heroe1.salud < 1:
+                self.heroe1.esta_vivo = False
+                return personaje,'muerto'
+            else:
+                print(f'{self.heroe2.nombre} ataca a {self.heroe1.nombre} y lo deja con {self.heroe1.salud} de salud.')
+                return 'heroe1'
+
+        
+
+# terminal
+
+arturo = Guerrero('Arturo', 100, 15, 25,True)
+merlin = Mago('Merlin', 100, 15, 50, 100, True)
+
+arena = Arena(arturo, merlin)
+
+while True:
+    respuesta = arena.combatir()
+    if respuesta[1] == 'muerto':
+        print(f'El {respuesta[0]} ha {respuesta[1]}!.')
+        break
+    else:
+        print('Ataque')
+        input()
+
+
+
+
+
+
+
+# local = Personaje('Local', 100, 15, True)
+# visitante = Personaje('Visitante',100,12,True)
+
+
+
+
+
+
+# visitante.mostrar_estado()
+# local.mostrar_estado()
+# print('')
+
+
+# while local.salud >= 0 or visitante.salud >= 0:
+#     local.atacar(visitante)
+#     visitante.recibir_daño(local.poder_ataque)
+#     local.mostrar_estado()
+#     print('')
+
+
+#     local.mostrar_estado()
+#     visitante.mostrar_estado()
+#     print('')
+#     visitante.atacar(local)
+#     local.recibir_daño(visitante.poder_ataque)
+#     visitante.mostrar_estado()
+#     print('')
+
+
+#     visitante.mostrar_estado()
+#     local.mostrar_estado()
+#     print('')
+
+    
+
+
+    # print(visitante.mostrar_estado())
+
+    # print(visitante.atacar(local))
+    # print(local.mostrar_estado())
+
+
+
+
 # # personajes de un juego
 # # mago, caballero, rey, curandero, bufon
 # # todos los personajes tienen nombre, habilidad y salud
@@ -381,104 +686,104 @@
 #     pelea.batalla()
 
 
-from random import *
+# from random import *
 
-class Personaje:
-    # constructor
-    def __init__(self, nombre_personaje, vidas = 3, salud = 100):
-        self.__nombre_personaje = nombre_personaje
-        self.__vidas = vidas
-        self.__salud = salud
+# class Personaje:
+#     # constructor
+#     def __init__(self, nombre_personaje, vidas = 3, salud = 100):
+#         self.__nombre_personaje = nombre_personaje
+#         self.__vidas = vidas
+#         self.__salud = salud
     
-    # metodo setters (cargar) y getters (obtener) -Encapsulamiento-
-    def set_nombre_personaje(self, nomb_pers):
-        self.__nombre_personaje = nomb_pers
+#     # metodo setters (cargar) y getters (obtener) -Encapsulamiento-
+#     def set_nombre_personaje(self, nomb_pers):
+#         self.__nombre_personaje = nomb_pers
     
-    def get_nombre_personaje(self):
-        return self.__nombre_personaje
+#     def get_nombre_personaje(self):
+#         return self.__nombre_personaje
     
-    def set_vidas(self, vidas):
-        self.__vidas = vidas
+#     def set_vidas(self, vidas):
+#         self.__vidas = vidas
     
-    def get_vidas(self):
-        return self.__vidas
+#     def get_vidas(self):
+#         return self.__vidas
     
-    def set_salud(self, salud):
-        self.__salud = salud
+#     def set_salud(self, salud):
+#         self.__salud = salud
         
-    def get_salud(self):
-        return self.__salud
+#     def get_salud(self):
+#         return self.__salud
 
-
-        
-class Arma:
-    # constructor
-    def __init__(self, nombre_arma, provoca_danio = 0):
-        self.__nombre_arma = nombre_arma
-        self.__provoca_danio = provoca_danio
-    
-    # metodo getters y setters
-    def get_nombre_arma(self):
-        return self.__nombre_arma
-    
-    def get_provoca_danio(self):
-        return self.__provoca_danio
-    
-    def set_nombre_arma(self, nombre_arm):
-        self.__nombre_arma = nombre_arm
-    
-    def set_provoca_danio(self, prov_danio):
-        denom_arma = self.get_nombre_arma()
-        if denom_arma == 'cuchillo':
-            self.__provoca_danio = 5
-        elif denom_arma == 'espada':
-            self.__provoca_danio = 10
-        elif denom_arma == 'bacula':
-            self.__provoca_danio = 8
-        else:
-            self.__provoca_danio = 0    
-    
-    
-
-class PersonajeArmado(Personaje, Arma):
-    def __init__(self, nombre_personaje, nombre_arma, vidas = 3, salud = 100, danio_provoca = 0 ):
-        Personaje.__init__(self, nombre_personaje, vidas, salud)
-        Arma.__init__(self, nombre_arma, danio_provoca)
-        
-        
-    def atacar(self, atacado, danio):
-        vida_actual = atacado.get_salud()
-        queda_vida = vida_actual - danio
-        atacado.set_salud(queda_vida)
-        return atacado.get_salud()
-
-    # polimorfismo (atacar)
-    def pelea(self, retador, retado):
-        eleccion = randint(0,1)
-        if eleccion == 0:
-            return f'El {retador.get_nombre_personaje()} atacó a {retado.get_nombre_personaje()}. {retado.get_nombre_personaje()} tiene {self.atacar(retado,10)} de salud.'
-        else:
-            return f'El {retado.get_nombre_personaje()} atacó a {retador.get_nombre_personaje()}. {retador.get_nombre_personaje()} tiene {self.atacar(retador,10)} de salud.'
 
         
+# class Arma:
+#     # constructor
+#     def __init__(self, nombre_arma, provoca_danio = 0):
+#         self.__nombre_arma = nombre_arma
+#         self.__provoca_danio = provoca_danio
+    
+#     # metodo getters y setters
+#     def get_nombre_arma(self):
+#         return self.__nombre_arma
+    
+#     def get_provoca_danio(self):
+#         return self.__provoca_danio
+    
+#     def set_nombre_arma(self, nombre_arm):
+#         self.__nombre_arma = nombre_arm
+    
+#     def set_provoca_danio(self, prov_danio):
+#         denom_arma = self.get_nombre_arma()
+#         if denom_arma == 'cuchillo':
+#             self.__provoca_danio = 5
+#         elif denom_arma == 'espada':
+#             self.__provoca_danio = 10
+#         elif denom_arma == 'bacula':
+#             self.__provoca_danio = 8
+#         else:
+#             self.__provoca_danio = 0    
+    
+    
+
+# class PersonajeArmado(Personaje, Arma):
+#     def __init__(self, nombre_personaje, nombre_arma, vidas = 3, salud = 100, danio_provoca = 0 ):
+#         Personaje.__init__(self, nombre_personaje, vidas, salud)
+#         Arma.__init__(self, nombre_arma, danio_provoca)
         
-perso = Personaje('pepe',3,100)
-persa = Personaje('pepa',3,100)
-perso.set_nombre_personaje('Pepa')
-print(perso.get_nombre_personaje())
-print(perso.get_vidas())
-print(perso.get_salud())
-print(perso.pelea(perso, persa))
-print(perso.pelea(perso, persa))
-print(perso.pelea(perso, persa))
-print(perso.pelea(perso, persa))
-print(perso.pelea(perso, persa))
+        
+#     def atacar(self, atacado, danio):
+#         vida_actual = atacado.get_salud()
+#         queda_vida = vida_actual - danio
+#         atacado.set_salud(queda_vida)
+#         return atacado.get_salud()
+
+#     # polimorfismo (atacar)
+#     def pelea(self, retador, retado):
+#         eleccion = randint(0,1)
+#         if eleccion == 0:
+#             return f'El {retador.get_nombre_personaje()} atacó a {retado.get_nombre_personaje()}. {retado.get_nombre_personaje()} tiene {self.atacar(retado,10)} de salud.'
+#         else:
+#             return f'El {retado.get_nombre_personaje()} atacó a {retador.get_nombre_personaje()}. {retador.get_nombre_personaje()} tiene {self.atacar(retador,10)} de salud.'
+
+        
+        
+# perso = Personaje('pepe',3,100)
+# persa = Personaje('pepa',3,100)
+# perso.set_nombre_personaje('Pepa')
+# print(perso.get_nombre_personaje())
+# print(perso.get_vidas())
+# print(perso.get_salud())
+# print(perso.pelea(perso, persa))
+# print(perso.pelea(perso, persa))
+# print(perso.pelea(perso, persa))
+# print(perso.pelea(perso, persa))
+# print(perso.pelea(perso, persa))
 
 
 
 
-# perso.__nombre_personaje = 'Pepe'
-# print(perso.__nombre_personaje)
-# print(perso.vidas)
-# print(perso.salud)
-# print(perso.__dir__())
+# # perso.__nombre_personaje = 'Pepe'
+# # print(perso.__nombre_personaje)
+# # print(perso.vidas)
+# # print(perso.salud)
+# # print(perso.__dir__())
