@@ -129,7 +129,12 @@
 # o puede ser aleatorio).
 
 # Importante: En el turno de cada personaje, 
-# debes darle la opción de realizar una acción especial si es posible (ej: si es un Guerrero con suficiente furia, que use ataque_furioso). Puedes implementar una lógica simple: si la habilidad especial está disponible, la usa; si no, realiza un ataque normal.
+# debes darle la opción de realizar una 
+# acción especial si es posible 
+# (ej: si es un Guerrero con suficiente furia, 
+# que use ataque_furioso). 
+# 
+# Puedes implementar una lógica simple: si la habilidad especial está disponible, la usa; si no, realiza un ataque normal.
 # Después de cada acción, se debe mostrar el estado de ambos combatientes usando su método mostrar_estado().
 # Al final del combate, el método debe declarar al ganador imprimiendo un mensaje claro (ej: "¡La batalla ha terminado! El ganador es Legolas.").
 # Puesta en Práctica (El main de tu programa):
@@ -153,6 +158,35 @@ class Personaje:
         self.esta_vivo = esta_vivo
 
     def atacar(self, oponente):
+        # \033[92m\033[1moponente.recibir_daño(self.poder_ataque)\033[0m\033[0m  # <--- DESCOMENTA ESTA LÍNEA (verde y negrita)
+        print (f'¡{self.nombre} ataca a {oponente.nombre} y le causa {self.poder_ataque} puntos de daño!')
+
+
+    def recibir_daño(self, cantidad_daño):
+        self.salud = self.salud - cantidad_daño
+        if self.salud <= 0:
+            self.esta_vivo = False
+            print(f'¡{self.nombre} ha muerto!')
+        else:
+            print(f'¡{self.nombre} le queda {self.salud} puntos de salud!')
+
+    def mostrar_estado(self):
+        print(f'¡{self.nombre} le queda {self.salud} puntos de salud.')
+
+
+
+# clase base
+class Personaje:
+    def __init__(self, nombre, salud, poder_ataque, esta_vivo = True):
+        self.nombre = nombre
+        self.salud = salud
+        self.salud_max = self.salud
+        self.poder_ataque = poder_ataque
+        self.esta_vivo = esta_vivo
+
+    def atacar(self, oponente):
+        oponente.recibir_daño(self.poder_ataque)
+
         # oponente.salud = oponente.salud - self.poder_ataque
         print (f'¡{self.nombre} ataca a {oponente.nombre} y le causa {self.poder_ataque} puntos de daño!')
 
@@ -175,7 +209,7 @@ class Guerrero(Personaje):
 
     def atacar(self, oponente):
         self.furia += 10
-        return super().atacar(oponente)
+        # return super().atacar(oponente)
     
     def ataque_furioso(self):
         if self.furia >= 40:
@@ -192,13 +226,15 @@ class Mago(Personaje):
 
     def atacar(self, oponente):
         self.poder_ataque = 4
-        print (f'¡{self.nombre} ataca a {oponente.nombre} y le causa {self.poder_ataque} puntos de daño!')
+        # print (f'¡{self.nombre} ataca a {oponente.nombre} y le causa {self.poder_ataque} puntos de daño!')
+        super().atacar(oponente) #llama al metodo del padre
+        return
     
     def lanzar_hachizo(self, oponente):
         if self.mana >= 25:
             self.mana -= 25
             self.poder_ataque = 30
-            super().atacar(self, oponente)
+            super().atacar(oponente)
         else:
             print(f'No hay suficiente mana (más de 25): {self.mana}')
             self.mana += 10
@@ -209,52 +245,141 @@ class Arena:
         self.heroe2 = heroe2
     
     def combatir(self):
-        if self.heroe1.esta_vivo == False:
-            print(f'El {self.heroe1.nombre} ha muerto!')
-            return 'muerto'
-        elif self.heroe2.esta_vivo == False:
-            print(f'El {self.heroe2} ha muerto!')
-            return 'muerto'
-        ataque_aleatorio = random.randint(0,1)
-        if ataque_aleatorio == 0:
-            personaje = self.heroe1.nombre
-            self.heroe2.salud -= self.heroe1.poder_ataque
-            if self.heroe2.salud < 1:
-                self.heroe2.esta_vivo = False
-                return personaje,'muerto'
+        print('Comienza el combate!')
+        turno = 0
+        while self.heroe1.esta_vivo and self.heroe2.esta_vivo:
+            turno += 1
+            print(f'\n--- Turno {turno} ---')
+
+            #Turno del heroe 1
+            print(f'Es el turno de {self.heroe1.nombre}:')
+            accion_heroe1 = input(f"¿Qué acción desea realizar {self.heroe1.nombre}? (Ataque normal (N), Ataque furioso (F) si tiene suficiente furia): ").upper()
+
+            if accion_heroe1 == 'F' and isinstance(self.heroe1, Guerrero) and self.heroe1.furia >= 40:
+                daño_furioso = self.heroe1.ataque_furioso()
+                print(f'¡{self.heroe1.nombre} usa Ataque Furioso y causa {daño_furioso} puntos de daño a {self.heroe2.nombre}!')
+                self.heroe2.recibir_daño(daño_furioso)
             else:
-                print(f'{self.heroe1.nombre} ataca a {self.heroe2.nombre} y lo deja con {self.heroe2.salud} de salud.')
-                return 'heroe2'
+                self.heroe1.atacar(self.heroe2)
+                self.heroe2.recibir_daño(self.heroe1.poder_ataque)
+
+            self.heroe1.mostrar_estado()
+            self.heroe2.mostrar_estado()
+
+            if not self.heroe2.esta_vivo:
+                break
+
+
+            # Turno del heroe 2
+            print(f'Es el turno de {self.heroe2.nombre}:')
+            if isinstance(self.heroe2, Mago):
+                accion_heroe2 = input(f"¿Qué acción desea realizar {self.heroe2.nombre}? (Ataque normal (N), Lanzar hechizo (H) si tiene suficiente maná): ").upper()
+                if accion_heroe2 == 'H' and self.heroe2.mana >= 25:
+                    self.heroe2.lanzar_hachizo(self.heroe1)
+                else:
+                    self.heroe2.atacar(self.heroe1)
+                    self.heroe1.recibir_daño(self.heroe2.poder_ataque)
+            else: # si el heroe2 no es mago
+                self.heroe2.atacar(self.heroe1)
+                self.heroe1.recibir_daño(self.heroe2.poder_ataque)
+            
+            self.heroe1.mostrar_estado()
+            self.heroe2.mostrar_estado()
+
+            if not self.heroe1.esta_vivo:
+                break
+
+        if self.heroe1.esta_vivo:
+            print(f"\n¡La batalla ha terminado! El ganador es {self.heroe1.nombre}.")
         else:
-            personaje = self.heroe2.nombre
-            self.heroe1.salud -= self.heroe2.poder_ataque
-            if self.heroe1.salud < 1:
-                self.heroe1.esta_vivo = False
-                return personaje,'muerto'
-            else:
-                print(f'{self.heroe2.nombre} ataca a {self.heroe1.nombre} y lo deja con {self.heroe1.salud} de salud.')
-                return 'heroe1'
+            print(f"\n¡La batalla ha terminado! El ganador es {self.heroe2.nombre}.")
+
+
+
+        # if not self.heroe1.esta_vivo:
+        #     print(f'El {self.heroe1.nombre} ha muerto!')
+        #     return self.heroe1.nombre, 'muerto'
+        # elif not self.heroe2.esta_vivo:
+        #     print(f'El {self.heroe2.nombre} ha muerto!')
+        #     return self.heroe2.nombre, 'muerto'
+        # ataque_aleatorio = random.randint(0,1)
+        # if ataque_aleatorio == 0:
+        #     personaje_atacante = self.heroe1
+        #     personaje_oponente = self.heroe2
+        #     if personaje_atacante.furia >= 40:
+        #         usar_furia = input(f'El personaje {personaje_atacante.nombre} puede utilizar su furia,\n¿Desea usar la furia en contra de {personaje_oponente.nombre}? (S/N): ')
+        #         if usar_furia.lower() == 's':
+        #             daño_furioso = personaje_atacante.ataque_furioso()
+        #             if isinstance(daño_furioso, int):
+        #                 personaje_oponente.recibir_daño(daño_furioso)
+        #                 return personaje_atacante.nombre, 'ataque con furia'
+        #             else:
+        #                 print(daño_furioso) #mensaje que no tiene suficiente furia
+        #                 personaje_oponente.recibir_daño(personaje_atacante.poder_ataque)
+        #                 return personaje_atacante.nombre, 'atacó'
+                    
+        #         else:
+        #             personaje_oponente.recibir_daño(personaje_atacante.poder_ataque)
+        #             return personaje_atacante.nombre, 'atacó'
+        #     else:
+        #         personaje_atacante.atacar(personaje_oponente)
+        #         personaje_oponente.recibir_daño(personaje_atacante.poder_ataque)
+        #         return personaje_atacante.nombre, 'atacó'
+        # else:
+        #     personaje_atacante = self.heroe2
+        #     personaje_oponente = self.heroe1
+        #     if isinstance(personaje_atacante, Mago):
+        #         personaje_atacante.lanzar_hachizo(personaje_oponente)
+        #         return personaje_atacante.nombre, 'lanzó hechizo'
+        #     else:
+        #         personaje_atacante.atacar(personaje_oponente)
+        #         personaje_oponente.recibir_daño(personaje_atacante.poder_ataque)
+        #         return personaje_atacante.nombre, 'atacó'
+
+
+
+        #         self.heroe2.salud -= self.heroe1.poder_ataque
+        #             if self.heroe2.salud < 1:
+        #                 self.heroe2.esta_vivo = False
+        #                 return personaje,'muerto'
+        #             else:
+        #                 print(f'{self.heroe1.nombre} ataca a {self.heroe2.nombre} y lo deja con {self.heroe2.salud} de salud.')
+        #                 return 'heroe2'
+        # else:
+        #     personaje = self.heroe2.nombre
+        #     self.heroe1.salud -= self.heroe2.poder_ataque
+        #     if self.heroe1.salud < 1:
+        #         self.heroe1.esta_vivo = False
+        #         return personaje,'muerto'
+        #     else:
+        #         print(f'{self.heroe2.nombre} ataca a {self.heroe1.nombre} y lo deja con {self.heroe1.salud} de salud.')
+        #         return 'heroe1'
+
 
         
 
 # terminal
 
-arturo = Guerrero('Arturo', 100, 15, 25,True)
-merlin = Mago('Merlin', 100, 15, 50, 100, True)
+# arturo = Guerrero('Arturo', 100, 15, 25,True)
+# merlin = Mago('Merlin', 100, 15, 50, 100, True)
 
-arena = Arena(arturo, merlin)
+# arena = Arena(arturo, merlin)
 
-while True:
-    respuesta = arena.combatir()
-    if respuesta[1] == 'muerto':
-        print(f'El {respuesta[0]} ha {respuesta[1]}!.')
-        break
-    else:
-        print('Ataque')
-        input()
+# while True:
+#     respuesta = arena.combatir()
+#     if respuesta[1] == 'muerto':
+#         print(f'El {respuesta[0]} ha {respuesta[1]}!.')
+#         break
+#     else:
+#         print('Ataque')
+#         input()
 
-dgfsfgdsfgd
-
+if __name__ == "__main__":
+    arturo = Guerrero('Arturo', 100, 15, 25, True)
+    merlin = Mago('Merlín', 80, 5, 100, 100, True )
+    arena = Arena(arturo, merlin)
+    arena.combatir()
+    
 
 
 
