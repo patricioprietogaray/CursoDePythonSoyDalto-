@@ -55,3 +55,40 @@ print(pato.set_nombre('Sebastián'))
 # print(pato.get_edad)
 # esto no funciona asi pero se puede utilizar
 # los decoradores
+
+# con property se usa como si fuera un atributo
+class Persona:
+    def __init__(self, nombre, edad):
+        self.__nombre = nombre
+        self.__edad = edad
+    
+    # de funcion a atributo con property
+    @property
+    def get_nombre(self):
+        return self.__nombre
+    
+    @property
+    def get_edad(self):
+        return self.__edad
+    
+    def set_nombre(self,nomb):
+        self.__nombre = nomb
+        return self.__nombre
+
+# # no se puede acceder en forma directa
+# pato = Persona('Patricio', 48)
+# print(pato.__edad)
+
+# acceder con getters y setters (concepto)
+pato = Persona('Patricio', 48)
+print(f'Usando @property para que get_nombre se comporte como atributo: {pato.get_nombre}.')
+
+
+# print(f'Sin usar @property con edad: {pato.get_edad}.')
+# Sin usar @property con edad: <bound method Persona.get_edad of <__main__.Persona object at 0x7f0548124390>>.
+
+print(f'Usar @property con edad: {pato.get_edad}.')
+
+
+print(pato.set_nombre('Sebastián'))
+
