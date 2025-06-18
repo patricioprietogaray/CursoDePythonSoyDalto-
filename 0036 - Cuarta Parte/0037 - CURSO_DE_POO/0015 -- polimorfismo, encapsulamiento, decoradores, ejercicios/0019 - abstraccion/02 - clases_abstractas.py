@@ -6,6 +6,8 @@
 # y metodos basicos caminar, hablar, etc)
 # es como la HERENCIA MAS COMPLEJA puede crear una instancia de jefe (hereda de persona)
 # pero no directamente una instancia de persona.
+# La abstraccion de una clase obliga que la clase hija deba declarar los metodos de 
+# la clase padre (hacer polimorfismo) y no dejar "colgado" metodos del padre.
 
 # IMPLEMENTAR UN METODO significa de como va a funcionar. 
 # para implementar un metodo "hacer_sonido()" debo crear un codigo que haga sonido
@@ -57,12 +59,15 @@ class Estudiante(Persona):
     
 
 
-# heredo y creo una clase desde la plantilla
+# heredo y creo una clase desde la plantilla y debo declarar cada uno de los métodos
+# de la plantilla, si no, no funciona!!!!!. Esto de da un toque de seguridad.
+
 class Trabajador(Persona):
     def __init__(self, nombre, edad, sexo, actividad):
         super().__init__(nombre, edad, sexo, actividad)
 
     # SE DEBE IMPLEMENTAR LOS METODOS ABSTRACTOS DE MANERA OBLIGATORIA
+    # fomenta el polimorfismo
     def hacer_actividad(self):
         print(f'Trabajo de: {self.actividad}')
     
