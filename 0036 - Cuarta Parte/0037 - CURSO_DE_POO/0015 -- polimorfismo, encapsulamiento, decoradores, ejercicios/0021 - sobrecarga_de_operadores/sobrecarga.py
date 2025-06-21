@@ -22,7 +22,7 @@ class Persona:
     def __repr__(self):
         return f'Persona("{self.nombre}",{self.edad})'
     
-
+    # SOBRECARGA DE OPERADORES: DEFINO LA SUMA COMO CONCATENADOR
     # definimos como se comportan los objetos de la clase Persona cuando se suman
     # los nombres se concatenan y las edades se suman.
     def __add__(self, otro):   # otro hace referencia al que queremos sumar
@@ -43,6 +43,6 @@ print(resultado)
 
 
 # llama a __repr__
-print(repr(resultado))
+print(repr(resultado.nombre[0:5]))
 
 # 2:47:23
